@@ -12,7 +12,7 @@ const Private = [
     { value: 1, label: 'Public' }
 ]
 
-const Catogory = [
+const Category = [
     { value: 0, label: "Film & Animation" },
     { value: 0, label: "Autos & Vehicles" },
     { value: 0, label: "Music" },
@@ -61,7 +61,7 @@ function UploadVideoPage(props) {
         if (title === "" || Description === "" ||
             Categories === "" || FilePath === "" ||
             Duration === "" || Thumbnail === "") {
-            return alert('Please first fill all the fields')
+            return alert('Please fill all the fields')
         }
 
         const variables = {
@@ -78,7 +78,7 @@ function UploadVideoPage(props) {
         axios.post('/api/video/uploadVideo', variables)
             .then(response => {
                 if (response.data.success) {
-                    alert('video Uploaded Successfully')
+                    alert('video uploaded successfully!')
                     props.history.push('/')
                 } else {
                     alert('Failed to upload video')
@@ -105,8 +105,6 @@ function UploadVideoPage(props) {
                         fileName: response.data.fileName
                     }
                     setFilePath(response.data.filePath)
-
-                    //gerenate thumbnail with this filepath ! 
 
                     axios.post('/api/video/thumbnail', variable)
                         .then(response => {
@@ -178,7 +176,7 @@ function UploadVideoPage(props) {
                 <br /><br />
 
                 <select onChange={handleChangeTwo}>
-                    {Catogory.map((item, index) => (
+                    {Category.map((item, index) => (
                         <option key={index} value={item.label}>{item.label}</option>
                     ))}
                 </select>
