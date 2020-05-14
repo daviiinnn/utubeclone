@@ -3,7 +3,8 @@ const router = express.Router();
 const multer = require('multer');
 var ffmpeg = require('fluent-ffmpeg');
 
-const { User } = require("../models/User");
+const { Video } = require("../models/video.db");
+const { User } = require("../models/user.db");
 
 const { auth } = require("../middleware/auth");
 
@@ -66,15 +67,26 @@ router.post("/thumbnail", (req, res) => {
             return res.json({ success: true, thumbFilePath: thumbFilePath, fileDuration: fileDuration})
         })
         .screenshots({
-            // Will take screens at 20%, 40%, 60% and 80% of the video
             count: 3,
             folder: 'uploads/thumbnails',
             size:'320x240',
-            // %b input basename ( filename w/o extension )
             filename:'thumbnail-%b.png'
         });
 
 });
+
+
+router.post("/uploadVideo", (req, res) => {
+
+    const video = new Video(req.body)
+
+    video.save((err, video) => {
+        if(err) return res.status(400).json({success: false, err})
+        return res.status(200).json({
+            success: true
+        })
+    })
+})
 
 
 
