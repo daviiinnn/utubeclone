@@ -8,6 +8,7 @@ import RegisterPage from './pages/RegisterPage/registerPage.component';
 import NavBar from './components/navbar/navbar.component';
 import Footer from './components/footer/footer.component';
 import uploadVideo from './pages/uploadVideo/uploadVideo.component';
+import VideoPage from './pages/videoPage/videoPage.component';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/video/upload" component={Auth(uploadVideo, true)} />
+          <Route exact path="/video/:videoId" component={Auth(VideoPage, null)} />
         </Switch>
       </div>
       <Footer />
