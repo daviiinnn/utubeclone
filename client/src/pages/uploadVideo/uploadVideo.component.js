@@ -1,15 +1,15 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Typography, Button, Form, message, Input, Icon } from 'antd';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 const { Title } = Typography;
 const { TextArea } = Input;
 
 const Private = [
-    { value: 0, label:'Private'},
-    { value: 1, label:'Public'}
+    { value: 0, label: 'Private' },
+    { value: 1, label: 'Public' }
 ]
 
 const Catogory = [
@@ -32,7 +32,7 @@ function UploadVideoPage(props) {
     const [Thumbnail, setThumbnail] = useState("")
 
 
-    const handleChangeTitle = ( event ) => {
+    const handleChangeTitle = (event) => {
         setTitle(event.currentTarget.value)
     }
 
@@ -65,7 +65,7 @@ function UploadVideoPage(props) {
         }
 
         const variables = {
-            writer: user.userData.id,
+            writer: user.userData._id,
             title: title,
             description: Description,
             privacy: privacy,
@@ -78,16 +78,16 @@ function UploadVideoPage(props) {
         axios.post('/api/video/uploadVideo', variables)
             .then(response => {
                 if (response.data.success) {
-                    alert('Video Uploaded Successfully')
+                    alert('video Uploaded Successfully')
                     props.history.push('/')
                 } else {
                     alert('Failed to upload video')
                 }
             })
-        
+
     }
 
-    const onDrop = ( files ) => {
+    const onDrop = (files) => {
 
         let formData = new FormData();
         const config = {
@@ -97,99 +97,99 @@ function UploadVideoPage(props) {
         formData.append("file", files[0])
 
         axios.post('/api/video/uploadfiles', formData, config)
-        .then(response=> {
-            if(response.data.success){
+            .then(response => {
+                if (response.data.success) {
 
-                let variable = {
-                    filePath: response.data.filePath,
-                    fileName: response.data.fileName
-                }
-                setFilePath(response.data.filePath)
-
-                //gerenate thumbnail with this filepath ! 
-                 
-                axios.post('/api/video/thumbnail', variable)
-                .then(response => {
-                    if(response.data.success) {
-                        setDuration(response.data.fileDuration)
-                        setThumbnail(response.data.thumbFilePath)
-                    } else {
-                        alert('Failed to make the thumbnails');
+                    let variable = {
+                        filePath: response.data.filePath,
+                        fileName: response.data.fileName
                     }
-                })
+                    setFilePath(response.data.filePath)
+
+                    //gerenate thumbnail with this filepath ! 
+
+                    axios.post('/api/video/thumbnail', variable)
+                        .then(response => {
+                            if (response.data.success) {
+                                setDuration(response.data.fileDuration)
+                                setThumbnail(response.data.thumbsFilePath)
+                            } else {
+                                alert('Failed to make the thumbnails');
+                            }
+                        })
 
 
-            } else {
-                alert('failed to save the video in server')
-            }
-        })
+                } else {
+                    alert('failed to save the video in server')
+                }
+            })
 
     }
 
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <Title level={2} > Upload Video</Title>
-        </div>
-
-        <Form onSubmit={onSubmit}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Dropzone 
-                    onDrop={onDrop}
-                    multiple={false}
-                    maxSize={800000000}>
-                    {({ getRootProps, getInputProps }) => (
-                        <div style={{ width: '300px', height: '240px', border: '1px solid lightgray', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                            {...getRootProps()}
-                        >
-                            <input {...getInputProps()} />
-                            <Icon type="plus" style={{ fontSize: '3rem' }} />
-
-                        </div>
-                    )}
-                </Dropzone>
-
-                {Thumbnail !== "" &&
-                    <div>
-                        <img src={`http://localhost:5000/${Thumbnail}`} alt="haha" />
-                    </div>
-                }
+            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+                <Title level={2} > Upload Video</Title>
             </div>
 
-            <br /><br />
-            <label>Title</label>
-            <Input
-                 onChange={handleChangeTitle}
-                 value={title}
-            />
-            <br /><br />
-            <label>Description</label>
-            <TextArea
-                 onChange={handleChangeDecsription}
-                 value={Description}
-            />
-            <br /><br />
+            <Form onSubmit={onSubmit}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Dropzone
+                        onDrop={onDrop}
+                        multiple={false}
+                        maxSize={800000000}>
+                        {({ getRootProps, getInputProps }) => (
+                            <div style={{ width: '300px', height: '240px', border: '1px solid lightgray', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                {...getRootProps()}
+                            >
+                                <input {...getInputProps()} />
+                                <Icon type="plus" style={{ fontSize: '3rem' }} />
 
-            <select onChange={handleChangeOne}>
-                {Private.map((item, index) => (
-                    <option key={index} value={item.value}>{item.label}</option>
-                ))}
-            </select>
-            <br /><br />
+                            </div>
+                        )}
+                    </Dropzone>
 
-            <select onChange={handleChangeTwo}>
-                {Catogory.map((item, index) => (
-                    <option key={index} value={item.label}>{item.label}</option>
-                ))}
-            </select>
-            <br /><br />
+                    {Thumbnail !== "" &&
+                        <div>
+                            <img src={`http://localhost:5000/${Thumbnail}`} alt="haha" />
+                        </div>
+                    }
+                </div>
 
-            <Button type="primary" size="large" onClick={onSubmit}>
-                Submit
+                <br /><br />
+                <label>Title</label>
+                <Input
+                    onChange={handleChangeTitle}
+                    value={title}
+                />
+                <br /><br />
+                <label>Description</label>
+                <TextArea
+                    onChange={handleChangeDecsription}
+                    value={Description}
+                />
+                <br /><br />
+
+                <select onChange={handleChangeOne}>
+                    {Private.map((item, index) => (
+                        <option key={index} value={item.value}>{item.label}</option>
+                    ))}
+                </select>
+                <br /><br />
+
+                <select onChange={handleChangeTwo}>
+                    {Catogory.map((item, index) => (
+                        <option key={index} value={item.label}>{item.label}</option>
+                    ))}
+                </select>
+                <br /><br />
+
+                <Button type="primary" size="large" onClick={onSubmit}>
+                    Submit
             </Button>
 
-        </Form>
-    </div>
+            </Form>
+        </div>
     )
 }
 
