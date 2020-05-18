@@ -8,24 +8,67 @@ function SubscribeButton(props) {
     const theguy = props.theguy
     const subscribee = props.subscribee
 
-    const [SubscriberNumber, setSubscriberNumber] = useState(0)
+
+    const [SubscribeNumber, setSubscribeNumber] = useState(0)
     const [Subscribed, setSubscribed] = useState(false)
+
+    const onSubscribe = ( ) => {
+
+
+        let subscribeVariables = {
+            theguy: theguy,
+            subscribee: subscribee
+        }
+
+        if(Subscribed) {
+            //when we are already subscribed 
+            axios.post('/api/subscribe/unSubscribe', subscribeVariables)
+                .then(response => {
+                    if(response.data.success){ 
+                        setSubscribeNumber(SubscribeNumber - 1)
+                        setSubscribed(!Subscribed)
+                    } else {
+                        alert('Failed to unsubscribe')
+                    }
+                })
+
+        } else {
+            // when we are not subscribed yet
+            
+            axios.post('/api/subscribe/subscribe', subscribeVariables)
+                .then(response => {
+                    if(response.data.success) {
+                        setSubscribeNumber(SubscribeNumber + 1)
+                        setSubscribed(!Subscribed)
+                    } else {
+                        alert('Failed to subscribe')
+                    }
+                })
+        }
+
+    }
 
     useEffect(() => {
 
-        const subscriberNumberVariables = { theguy: theguy, subscribee: subscribee}
-        axios.post('/api/subscribe/subscriberNumber', subscriberNumberVariables)
-        .then(response =>{
-            response.data.success ? setSubscriberNumber(response.data.SubscriberNumber)
-            : alert('Kurang goyang kang')
-        })
+        const subscribeNumberVariables = { theguy: theguy, subscribee: subscribee }
+        axios.post('/api/subscribe/subscribeNumber', subscribeNumberVariables)
+            .then(response => {
+                if (response.data.success) {
+                    setSubscribeNumber(response.data.subscribeNumber)
+                } else {
+                    alert('Failed to get subscriber Number')
+                }
+            })
 
-        axios.post('/api/subscribe/subscribed', subscriberNumberVariables)
-        .then(response =>{
-            response.data.success ? setSubscribed(response.data.subscribed) :
-            alert('ora ono')
-    
-        })
+        axios.post('/api/subscribe/subscribed', subscribeNumberVariables)
+            .then(response => {
+                if (response.data.success) {
+                    setSubscribed(response.data.subcribed)
+                } else {
+                    alert('Failed to get Subscribed Information')
+                }
+            })
+
     }, [])
 
 
@@ -35,7 +78,11 @@ function SubscribeButton(props) {
 
     return (
         <>
-            <button style={{
+            <button 
+
+            onClick={onSubscribe}
+
+            style={{
                 backgroundColor: `${Subscribed ? '#AAA' : '#CC0000'}`,
                 borderRadius: '4px',
                 color: 'white',
@@ -44,7 +91,7 @@ function SubscribeButton(props) {
                 fontSize: '1rem',
                 textTransform: 'uppercase'
             }}>
-                {SubscriberNumber} {Subscribed ? "Subscribed" : "Asu tenan iki jancok"}
+                {SubscribeNumber} {Subscribed ? "Subscribed" : "Asu tenan iki jancok"}
             </button>
         </>
     )

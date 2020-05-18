@@ -34,13 +34,24 @@ router.post("/subscribed", (req, res) => {
 
 router.post("/subscribe", (req, res) => {
 
-    const subscriber = new Subscriber(req.body);
+    const subscribe = new Subscriber(req.body);
 
-    subscriber.save((err, doc) => {
+    subscribe.save((err, doc) => {
         if(err) return res.json({ success: false, err })
         return res.status(200).json({ success: true })
     })
 
+});
+
+router.post("/unSubscribe", (req, res) => {
+
+    console.log(req.body)
+
+    Subscriber.findOneAndDelete({ theguy: req.body.theguy, subscribee: req.body.subscribee })
+        .exec((err, doc)=>{
+            if(err) return res.status(400).json({ success: false, err});
+            res.status(200).json({ success: true, doc })
+        })
 });
 
 module.exports = router;
