@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { List, Avatar, Row, Col } from 'antd';
 import axios from 'axios';
 import RightSide from './rightSide.component';
+import SubscribeButton from './subscribeButton.component';
+ 
 function VideoPage(props) {
     const videoId = props.match.params.videoId
     const [Video, setVideo] = useState([])
@@ -31,11 +33,11 @@ function VideoPage(props) {
                         <video style={{ width: '100%' }} src={`http://localhost:5000/${Video.filePath}`} controls></video>
     
                         <List.Item
-                            actions={[ ]}
+                            actions={[ <SubscribeButton theguy={Video.writer._id} subscribee={localStorage.getItem('userId')}/> ]}
                         >
                             <List.Item.Meta
                                 avatar={<Avatar src={Video.writer && Video.writer.image} />}
-                                title={<a href="https://ant.design">{Video.title}</a>}
+                                title={<a href="https://ant.design"><h2>{Video.title}</h2></a>}
                                 description={Video.description}
                             />
                             <div></div>
