@@ -9,6 +9,7 @@ import NavBar from './components/navbar/navbar.component';
 import Footer from './components/footer/footer.component';
 import uploadVideo from './pages/uploadVideo/uploadVideo.component';
 import VideoPage from './pages/videoPage/videoPage.component';
+import Subscriptions from './pages/subscriptionsPage/subscriptions.component';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/video/upload" component={Auth(uploadVideo, true)} />
           <Route exact path="/video/:videoId" component={Auth(VideoPage, null)} />
+          <Route exact path="/feed/subcriptions" component={Auth(Subscriptions, null)} />
         </Switch>
       </div>
       <Footer />

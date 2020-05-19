@@ -4,7 +4,6 @@ import axios from 'axios';
 
 
 function SubscribeButton(props) {
-
     const theguy = props.theguy
     const subscribee = props.subscribee
 
@@ -13,8 +12,6 @@ function SubscribeButton(props) {
     const [Subscribed, setSubscribed] = useState(false)
 
     const onSubscribe = ( ) => {
-
-
         let subscribeVariables = {
             theguy: theguy,
             subscribee: subscribee
@@ -33,7 +30,6 @@ function SubscribeButton(props) {
                 })
 
         } else {
-            // when we are not subscribed yet
             
             axios.post('/api/subscribe/subscribe', subscribeVariables)
                 .then(response => {
@@ -63,18 +59,13 @@ function SubscribeButton(props) {
         axios.post('/api/subscribe/subscribed', subscribeNumberVariables)
             .then(response => {
                 if (response.data.success) {
-                    setSubscribed(response.data.subcribed)
+                    setSubscribed(response.data.subscribed)
                 } else {
                     alert('Failed to get Subscribed Information')
                 }
             })
 
     }, [])
-
-
-
-
-
 
     return (
         <>
