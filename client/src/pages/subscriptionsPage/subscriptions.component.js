@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { FaCode } from "react-icons/fa";
 import { Card, Avatar, Col, Typography, Row } from 'antd';
 import axios from 'axios';
 import moment from 'moment';
@@ -10,7 +9,7 @@ function Subscriptions() {
   
     const [Videos, setVideos] = useState([])
 
-    let variable = { theguy : localStorage.getItem('userId')  }
+    let variable = { subscribee : localStorage.getItem('userId')  }
 
     useEffect(() => {
         axios.post('/api/video/getSubscriptionVideos', variable)

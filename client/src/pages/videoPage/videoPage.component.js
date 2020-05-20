@@ -7,7 +7,6 @@ import SubscribeButton from './subscribeButton.component';
 function VideoPage(props) {
     const videoId = props.match.params.videoId
     const [Video, setVideo] = useState([])
-
     const videoVariable = {
         videoId: videoId
     }

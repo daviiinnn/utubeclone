@@ -22,7 +22,7 @@ function App() {
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/video/upload" component={Auth(uploadVideo, true)} />
           <Route exact path="/video/:videoId" component={Auth(VideoPage, null)} />
-          <Route exact path="/feed/subcriptions" component={Auth(Subscriptions, null)} />
+          <Route exact path="/feed/subscriptions" component={Auth(Subscriptions, null)} />
         </Switch>
       </div>
       <Footer />
