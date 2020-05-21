@@ -3,6 +3,7 @@ import { Button, Input } from 'antd';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import SingleComment from './singleComment.component';
+import ChildComment from './childComment.component';
 const { TextArea } = Input;
 
 function Comments(props) {
@@ -55,7 +56,7 @@ function Comments(props) {
                 (!comment.responseTo &&
                     <React.Fragment>
                         <SingleComment comment={comment} postId={props.postId} refreshFunction={props.refreshFunction} />
-        
+                        <ChildComment CommentLists={props.CommentLists} postId={props.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} />
                     </React.Fragment>
                 )
             ))}
