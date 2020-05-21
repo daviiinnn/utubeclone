@@ -40,29 +40,25 @@ function Comments(props) {
             <hr />
             {/* Comment Lists  */}
             {console.log(props.CommentLists)}
-
-            {props.CommentLists && props.CommentLists.map((comment, index) => (
-                (!comment.responseTo &&
-                    <React.Fragment>
-                        <SingleComment comment={comment} postId={props.postId} refreshFunction={props.refreshFunction} />
-                        
-                    </React.Fragment>
-                )
-            ))}
-
-
-
-            {/* Root Comment Form */}
             <form style={{ display: 'flex' }} onSubmit={onSubmit}>
                 <TextArea
                     style={{ width: '100%', borderRadius: '5px' }}
                     onChange={handleChange}
                     value={Comment}
-                    placeholder="write some comments"
+                    placeholder="Add a public comment..."
                 />
                 <br />
                 <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</Button>
             </form>
+
+            {props.CommentLists && props.CommentLists.map((comment, index) => (
+                (!comment.responseTo &&
+                    <React.Fragment>
+                        <SingleComment comment={comment} postId={props.postId} refreshFunction={props.refreshFunction} />
+        
+                    </React.Fragment>
+                )
+            ))}
 
         </div>
     )
