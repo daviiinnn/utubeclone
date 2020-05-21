@@ -5,7 +5,7 @@ const commentSchema = mongoose.Schema({
     writer: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    },
+    }, 
     postId: {
         type: Schema.Types.ObjectId,
         ref: 'Video'
@@ -17,6 +17,7 @@ const commentSchema = mongoose.Schema({
     content: {
         type: String
     }
+
 }, { timestamps: true })
 
 

@@ -10,7 +10,6 @@ function VideoPage(props) {
     const [Video, setVideo] = useState([])
     const [CommentLists, setCommentLists] = useState([])
 
-
     const videoVariable = {
         videoId: videoId
     }
@@ -26,8 +25,8 @@ function VideoPage(props) {
                 }
             })
 
-    axios.post('/api/comment/getComments', videoVariable)
-         .then(response => {
+        axios.post('/api/comment/getComments', videoVariable)
+            .then(response => {
                 if (response.data.success) {
                     console.log('response.data.comments',response.data.comments)
                     setCommentLists(response.data.comments)
@@ -36,8 +35,8 @@ function VideoPage(props) {
                 }
             })
 
-    }, [])
 
+    }, [])
 
     const updateComment = (newComment) => {
         setCommentLists(CommentLists.concat(newComment))
@@ -71,6 +70,7 @@ function VideoPage(props) {
                         <h2>Up next</h2>
                         <hr style={{marginRight: '4rem'}}/>
                     </div>
+
                     <RightSide />
     
                 </Col>
