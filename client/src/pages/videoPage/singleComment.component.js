@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Comment, Avatar, Button, Input } from 'antd';
 import Axios from 'axios';
 import { useSelector } from 'react-redux';
+import LikeDislikes from './likeDislikes.component';
 const { TextArea } = Input;
 function SingleComment(props) {
     const user = useSelector(state => state.user);
@@ -40,6 +41,7 @@ function SingleComment(props) {
     }
 
     const actions = [
+        <LikeDislikes comment commentId={props.comment._id} userId={localStorage.getItem('userId')} />,
         <span onClick={openReply} key="comment-basic-reply-to">Reply to </span>
     ]
 
@@ -68,7 +70,7 @@ function SingleComment(props) {
                         style={{ width: '100%', borderRadius: '5px' }}
                         onChange={handleChange}
                         value={CommentValue}
-                        placeholder="write some comments"
+                        placeholder="Add a public comment..."
                     />
                     <br />
                     <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</Button>

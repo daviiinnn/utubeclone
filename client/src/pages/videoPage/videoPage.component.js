@@ -4,6 +4,7 @@ import axios from 'axios';
 import RightSide from './rightSide.component';
 import SubscribeButton from './subscribeButton.component';
 import Comments from './comments.component';
+import LikeDislikes from './likeDislikes.component'
  
 function VideoPage(props) {
     const videoId = props.match.params.videoId
@@ -51,11 +52,12 @@ function VideoPage(props) {
                         <video style={{ width: '100%' }} src={`http://localhost:5000/${Video.filePath}`} controls></video>
     
                         <List.Item
-                            actions={[ <SubscribeButton theguy={Video.writer._id} subscribee={localStorage.getItem('userId')}/> ]}
+                            actions={[  <LikeDislikes video videoId={videoId} userId={localStorage.getItem('userId')}  />,
+                                        <SubscribeButton theguy={Video.writer._id} subscribee={localStorage.getItem('userId')}/> ]}
                         >
                             <List.Item.Meta
                                 avatar={<Avatar src={Video.writer && Video.writer.image} />}
-                                title={<a href="https://ant.design"><h2>{Video.title}</h2></a>}
+                                title={<h2>{Video.title}</h2>}
                                 description={Video.description}
                             />
                             <div></div>
